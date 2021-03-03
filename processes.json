@@ -2,7 +2,7 @@
     "apps": [
       {
         "name": "meituan",
-        "cwd": "/usr/local/bin/npm",
+        "cwd": "/root/meituan",
         "script": "/usr/local/bin/npm",
         "log_date_format": "YYYY-MM-DD HH:mm Z",
         "error_file": "/var/log/node-app/node-app.stderr.log",
