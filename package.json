@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve --port 8002",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "pm2":"pm2 start vue-cli-service serve --port 8002"
+    "pm2": "pm2 start vue-cli-service serve --port 8002"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -14,6 +14,7 @@
     "core-js": "^3.6.5",
     "vant": "^2.12.6",
     "vue": "^2.6.11",
+    "vue-infinite-scroll": "^2.0.2",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"
   },

@@ -1,4 +1,27 @@
 <template>
+          <!-- <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+            <div v-for="item in shopList" class="list-container" :key="item.id"><div class="img-box" > 
+        <img :src="item.img" />
+      </div>
+      <div class="info-box">
+         <div class="title">{{ item .name }}</div>
+          <div class="rate-box">
+            <div>
+            <span class="rate"><star :score="item.score"></star>{{ item.score }}分</span>
+            <span>月销{{ item.number }}</span>
+            </div>
+            <div>
+                  <span>{{ item.minute}}分钟</span>
+            <span class="left-line">{{ item.distance }}KM</span>
+            </div>
+          </div>
+          <div class="distributton-box">
+            <span>起送 {{ item.per_capita }}</span>
+            <span class="left-line">配送 {{ item.fee }}</span>
+            <span class="left-line">人均 {{ item.price }}</span>
+          </div></div>
+          </div>
+          </div> -->
 <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="getDada">
   <ul class="list-container">
     <li class="shop-list" v-for="item in shopList" :key="item.id" @click="goDetail(item.id)">
@@ -38,49 +61,47 @@ export default {
   },
   data() {
     return {
-      current: 0, // 当前页码
-      size: 10, // 分页大小
+      current: 0, //当前页
+      size: 5, //分页大小
       shopList: [],
-      loading: true,
+      loading: false,
       finished:false,
-      total:0
+      total:0 //总条数
+      //  count: 0,
+      // data: [],
+      // busy: false
+
     }
-  },
-  onLoad(){
-    this.loading=true
-    this.getDada().then(res=>{
-      console.log(res)
-    })
   },
   created() {
     this.getDada()
   },
   methods: {
+    // loadMore: function() {
+    //   this.busy = true
+    //   // setTimeout(() => {
+    //   //   for (var i = 0, j = 10; i < j; i++) {
+    //   //     this.data.push({name: this.count++ })
+    //   //   }
+    //   //   console.log(this.data)
+    //   //   this.busy = false
+    //   // }, 1000)
+    // },
    async getDada () {
      const { data } = await getStore({
        current: this.current,
        size: this.size
      })
-     console.log(data)
-    //  this.shopList = data.list
+    console.log(this.size)
     this.shopList= this.shopList.concat(data.list);
     this.loading = false
     this.current++
     this.total = data.total
+    // console.log(this.total)
     if(this.shopList.length >= this.total)
     {
       this.loading = true
     }
-    let result={
-      total: data.total,
-      current:this.current,
-      shopList:this.shopList
-    }
-    let myShopList= data.list
-    result.shopList=myShopList.map(item=>{
-      
-      console.log(item)
-    })
    },
    goDetail(id){
      this.$router.push({path:"/detail", query: {id}})

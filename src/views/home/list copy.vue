@@ -41,27 +41,37 @@ export default {
       current: 0, // 当前页码
       size: 10, // 分页大小
       shopList: [],
-      loading: true,
+      loading: false,
       finished:false,
-      total:0
+      total:0,
+     shoplistData:[]
     }
   },
-  onLoad(){
-    this.loading=true
-    this.getDada().then(res=>{
-      console.log(res)
-    })
-  },
+
   created() {
     this.getDada()
   },
   methods: {
+      onLoad(){
+    this.loading=true
+    this.getDada().then(res=>{
+     this.shopList=this.shopList.concat(res.shopList)
+     console.log(this.shopList)
+     if(this.shopList.list>=res.total) {
+       this.finished = true
+     } else {
+       this.finished=false
+       this.current++
+     }
+     this.loading=false
+    })
+  },
    async getDada () {
      const { data } = await getStore({
        current: this.current,
        size: this.size
      })
-     console.log(data)
+    //  console.log(data)
     //  this.shopList = data.list
     this.shopList= this.shopList.concat(data.list);
     this.loading = false
@@ -76,11 +86,15 @@ export default {
       current:this.current,
       shopList:this.shopList
     }
-    let myShopList= data.list
-    result.shopList=myShopList.map(item=>{
-      
-      console.log(item)
-    })
+    // let myShopList= data.list
+    // // console.log(myShopList)
+    // result.shopList=myShopList.map(item=>{
+    //    return Object.assign({}, item, {
+    //      name: this.shopList.name
+    //                   })
+    // })
+   
+   return result
    },
    goDetail(id){
      this.$router.push({path:"/detail", query: {id}})
