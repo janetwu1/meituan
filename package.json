@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --port 8002",
+    "serve": "vue-cli-service serve --port 8003",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "pm2": "pm2 start vue-cli-service serve --port 8002"
+    "pm2": "pm2 start vue-cli-service serve --port 8003"
   },
   "dependencies": {
     "axios": "^0.21.1",

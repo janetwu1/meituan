@@ -1,10 +1,6 @@
 <template>
   <div>
-    <van-sticky :offset-top="0">
-      <div class="header">
-        <input type="text" class="search" placeholder="请输入商品名称"/>
-      </div>
-    </van-sticky>
+    <search></search>
     <category></category>
     <div class="title">附近的商家</div>
     <list></list>
@@ -14,11 +10,12 @@
 <script>
 import category from './category'
 import List from './list.vue'
-
+import search from '../components/search.vue'
 export default {
  components: {
    category,
-   List
+   List,
+   search
  }
 }
 </script>

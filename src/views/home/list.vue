@@ -1,5 +1,5 @@
 <template>
-<van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="getDada">
+<van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
   <ul class="list-container">
     <li class="shop-list" v-for="item in shopList" :key="item.id" @click="goDetail(item.id)">
       <div class="img-box">
@@ -46,41 +46,41 @@ export default {
       total:0
     }
   },
-  onLoad(){
-    this.loading=true
-    this.getDada().then(res=>{
-      console.log(res)
-    })
-  },
+
   created() {
+    this.current=1
     this.getDada()
   },
   methods: {
+     onLoad(){
+       this.loading=true
+    this.getDada().then(res=>{
+      console.log(res)
+      this.shopList=this.shopList.concat(res.shopList)
+      if(this.shopList.length>=res.total){
+        this.finished=true
+      } else{
+        this.finished=false
+        this.current++
+      }
+      this.loading=false
+    })
+  },
    async getDada () {
      const { data } = await getStore({
        current: this.current,
        size: this.size
      })
      console.log(data)
-    //  this.shopList = data.list
-    this.shopList= this.shopList.concat(data.list);
-    this.loading = false
-    this.current++
-    this.total = data.total
-    if(this.shopList.length >= this.total)
-    {
-      this.loading = true
-    }
-    let result={
+    //  this.shopList2 = data.list
+    this.shopList= data.list
+    // this.loading = false
+    var result={
       total: data.total,
-      current:this.current,
-      shopList:this.shopList
+      current: this.current,
+      shopList: this.shopList
     }
-    let myShopList= data.list
-    result.shopList=myShopList.map(item=>{
-      
-      console.log(item)
-    })
+   return result
    },
    goDetail(id){
      this.$router.push({path:"/detail", query: {id}})
